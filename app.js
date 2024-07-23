@@ -1,7 +1,12 @@
 // variables
 
+import helmet from 'helmet';
 import express from 'express';
 const app = express();
+
+// declaring usage of helmet
+
+app.use(helmet.xPoweredBy())
 
 // Logs request 
 
