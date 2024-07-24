@@ -1,16 +1,25 @@
-
-
 {
-	"data": [
-		{ 
-            "responseCode": 200,
-            "timeStamp": "",
-            "activityRequest": "",
-            "responseTime": ""
-        
-        }
-
+  "statusCode": 200,
+  "response": {
+    "data": [
+      {
+        "id": 1,
+        "userId": 123,
+        "activity": "Logged In",
+        "timestamp": "2023-07-24T14:48:00.000Z"
+      },
+      {
+        "id": 2,
+        "userId": 124,
+        "activity": "Viewed Profile",
+        "timestamp": "2023-07-24T15:00:00.000Z"
+      },
+      {
+        "id": 3,
+        "userId": 125,
+        "activity": "Logged Out",
+        "timestamp": "2023-07-24T16:30:00.000Z"
+      }
     ]
-    }
-
-
+  }
+}
