@@ -1,12 +1,12 @@
 // variables
 
-import helmet from 'helmet';
-import express from 'express';
-const app = express();
+import helmet from 'helmet'; // imports helmet library
+import express from 'express'; // imports express library
+const app = express(); // express app variable
 
-// declaring usage of helmet
+// declaring usage of helmet and nodemon
 
-app.use(helmet.xPoweredBy())
+app.use(helmet.xPoweredBy()) // utilizing helmet to hide headers
 
 // Logs request 
 
