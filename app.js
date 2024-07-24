@@ -46,7 +46,7 @@ app.get('/data', async (req, res) => {
       // Log the data to console
       console.log('Status Code:', statusCode);
       userActivities.forEach(activity => {
-        console.log(`User ${activity.userId} did: ${activity.activity} at ${activity.timestamp}`);
+        console.log(`User ${activity.userId} did: ${activity.activity} at ${new Date()}`);
       });
   
       // Send the JSON response
