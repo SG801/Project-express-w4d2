@@ -2,6 +2,7 @@
 
 import helmet from 'helmet'; // imports helmet library
 import express from 'express'; // imports express library
+import { v4 as uuidv4 } from 'uuid';
 //const app = express(); // express app variable
 import fs from 'fs/promises'; // Using promises for async readFile
 import path from 'path';
@@ -47,6 +48,9 @@ app.get('/data', async (req, res) => {
       console.log('Status Code:', statusCode);
       userActivities.forEach(activity => {
         console.log(`User ${activity.userId} did: ${activity.activity} at ${new Date()}`);
+        userActivities.forEach(activity => {
+            activity.id = uuidv4(); // Generate a new UUID and assign it to the `id` field of each activity.
+        });
       });
   
       // Send the JSON response
