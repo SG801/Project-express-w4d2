@@ -56,7 +56,23 @@ app.get('/data', async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
+
+  app.get('/activities')
   
   app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
+  });
+
+  //Post a new activity 
+  app.post('/activities',(req,res) => {
+    const newActivity = req.body.newActivity;
+
+    if (!newActivity){
+        res.status(400).json({
+            "error":true,
+            "data":null
+        });
+
+    
+    }
   });
