@@ -41,12 +41,9 @@ app.get('/data', async (req, res) => {
       userActivities.forEach(activity => {
         console.log(`User ${activity.userId} did: ${activity.activity} at ${new Date()}`);
         userActivities.forEach(activity => {
-<<<<<<< HEAD
             activity.id = "uuidv4()"; // Generate a new UUID and assign it to the `id` field of each activity.
-=======
             activity.id = uuidv4();
             activity.timestamp = new Date(); // Generate a new UUID and assign it to the `id` field of each activity.
->>>>>>> 752945a8928f272cf366d1f828b32b075bb6a2d0
         });
       });
       // Send the JSON response
