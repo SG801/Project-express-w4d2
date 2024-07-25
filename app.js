@@ -49,10 +49,36 @@ app.get('/data', async (req, res) => {
       userActivities.forEach(activity => {
         console.log(`User ${activity.userId} did: ${activity.activity} at ${new Date()}`);
         userActivities.forEach(activity => {
-            activity.id = uuidv4(); // Generate a new UUID and assign it to the `id` field of each activity.
+            activity.id = "uuidv4()"; // Generate a new UUID and assign it to the `id` field of each activity.
         });
       });
+      // Send the JSON response
+      res.json(jsonData);
+    } catch (error) {
+      console.error('Error reading or parsing file:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+
+  app.post('/data', async (req, res) => {
+    try {
+      const dataPath = path.join(__dirname, 'data.json');
+      const fileContent = await fs.readFile(dataPath, 'utf8');
+      const jsonData = JSON.parse(fileContent);
   
+      const statusCode = jsonData.statusCode;
+      const userActivities = jsonData.response.data;
+  
+      // Log the data to console
+      console.log('Status Code:', statusCode);
+      userActivities.forEach(activity => {
+        console.log(`User ${activity.userId} did: ${activity.activity} at ${new Date()}`);
+        userActivities.forEach(activity => {
+            activity.id = "uuidv4()"; // Generate a new UUID and assign it to the `id` field of each activity.
+            const newActivity = req.body.activity;
+            console.log('New activity:', newActivity);
+        });
+      });
       // Send the JSON response
       res.json(jsonData);
     } catch (error) {
