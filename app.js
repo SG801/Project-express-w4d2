@@ -19,7 +19,7 @@ app.use(helmet.xPoweredBy()) // utilizing helmet to hide headers
 
 // Logs request 
 
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
     res.status(200).send('Hello World!');
     console.log('Request logged:', new Date());
 });
@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
 // Endpoint to serve data from data.json
 
 
-app.get('/data', async (req, res) => {
+app.get('/data', async (_req, res) => {
     try {
       const dataPath = path.join(__dirname, 'data.json');
       const fileContent = await fs.readFile(dataPath, 'utf8');
@@ -54,7 +54,7 @@ app.get('/data', async (req, res) => {
     }
   });
 
-  app.post('/data', async (req, res) => {
+  app.post('/activities', async (req, res) => {
     try {
       const dataPath = path.join(__dirname, 'data.json');
       const fileContent = await fs.readFile(dataPath, 'utf8');
@@ -68,9 +68,10 @@ app.get('/data', async (req, res) => {
       userActivities.forEach(activity => {
         console.log(`User ${activity.userId} did: ${activity.activity} at ${new Date()}`);
         userActivities.forEach(activity => {
-            activity.id = "uuidv4()"; // Generate a new UUID and assign it to the `id` field of each activity.
+            activity.id = uuidv4(); // Generate a new UUID and assign it to the `id` field of each activity.
             const newActivity = req.body.activity;
             console.log('New activity:', newActivity);
+            
         });
       });
       // Send the JSON response
@@ -81,10 +82,7 @@ app.get('/data', async (req, res) => {
     }
   });
   
-  app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
-  });
-
+  
   //Post a new activity 
   app.post('/activities',(req,res) => {
     const newActivity = req.body.newActivity;
@@ -96,5 +94,15 @@ app.get('/data', async (req, res) => {
         });
 
     
+    }else {
+      // new data saved to the file
+      res.status(201).json({
+        "error":false,
+        "data":newActivity
+      })
     }
+  });
+
+  app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
   });
