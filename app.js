@@ -2,7 +2,7 @@
 
 import helmet from 'helmet'; // imports helmet library
 import express from 'express'; // imports express library
-//const app = express(); // express app variable
+import { v4 as uuidv4 } from 'uuid';
 import fs from 'fs/promises'; // Using promises for async readFile
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -24,13 +24,6 @@ app.get('/', (req, res) => {
     console.log('Request logged:', new Date());
 });
 
-
-/*const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
- */
-
 // Endpoint to serve data from data.json
 
 
@@ -46,7 +39,11 @@ app.get('/data', async (req, res) => {
       // Log the data to console
       console.log('Status Code:', statusCode);
       userActivities.forEach(activity => {
-        console.log(`User ${activity.userId} did: ${activity.activity} at ${activity.timestamp}`);
+        console.log(`User ${activity.userId} did: ${activity.activity} at ${new Date()}`);
+        userActivities.forEach(activity => {
+            activity.id = uuidv4();
+            activity.timestamp = new Date(); // Generate a new UUID and assign it to the `id` field of each activity.
+        });
       });
   
       // Send the JSON response
@@ -56,8 +53,6 @@ app.get('/data', async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
-
-  app.get('/activities')
   
   app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
