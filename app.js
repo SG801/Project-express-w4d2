@@ -40,6 +40,8 @@ app.get('/', (_req, res) => {
 
   app.post('/activities', async (req, res) => {
     const newData = req.body;
+    const newTime = req.body;
+    const newActivity = req.body;
     try {
       let jsonData = { statusCode: 200, response: { data: [] } };
   
@@ -57,9 +59,13 @@ app.get('/', (_req, res) => {
       }
   
       // Generate a new ID based on the existing data
-      const newId = jsonData.response.data.length ? jsonData.response.data[jsonData.response.data.length - 1].id + 1 : 1;
+      const newId = uuidv4();
       newData.id = newId;
-  
+      const time = new Date();
+      newData.time = time;
+      const activities = 200;
+      newData.statusCode = activities;
+      
       // Append new data to jsonData.response.data array
       jsonData.response.data.push(newData);
   
