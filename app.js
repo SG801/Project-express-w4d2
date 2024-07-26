@@ -12,10 +12,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
 const port = 3000;
+const dataFilePath = path.join(__dirname, 'data.json');
 
 // declaring usage of helmet and nodemon
 
 app.use(helmet.xPoweredBy()) // utilizing helmet to hide headers
+app.use(express.json());
 
 // Logs request 
 
@@ -54,52 +56,38 @@ app.get('/data', async (_req, res) => {
     }
   });
 
-  app.post('/activities', async (req, res) => {
+  app.post('/data', async (req, res) => {
+    const newData = req.body;
     try {
-      const dataPath = path.join(__dirname, 'data.json');
-      const fileContent = await fs.readFile(dataPath, 'utf8');
-      const jsonData = JSON.parse(fileContent);
+      let jsonData = { statusCode: 200, response: { data: [] } };
   
-      const statusCode = jsonData.statusCode;
-      const userActivities = jsonData.response.data;
+      // Check if data.json exists
+      try {
+        const existingData = await fs.readFile(dataFilePath, 'utf8');
+        jsonData = JSON.parse(existingData);
+      } catch (readError) {
+        // If data.json does not exist, initialize it with default structure
+        if (readError.code === 'ENOENT') {
+          console.log('data.json does not exist, initializing with default structure.');
+        } else {
+          throw readError;
+        }
+      }
   
-      // Log the data to console
-      console.log('Status Code:', statusCode);
-      userActivities.forEach(activity => {
-        console.log(`User ${activity.userId} did: ${activity.activity} at ${new Date()}`);
-        userActivities.forEach(activity => {
-            activity.id = uuidv4(); // Generate a new UUID and assign it to the `id` field of each activity.
-            const newActivity = req.body.activity;
-            console.log('New activity:', newActivity);
-            
-        });
-      });
-      // Send the JSON response
-      res.json(jsonData);
+      // Generate a new ID based on the existing data
+      const newId = jsonData.response.data.length ? jsonData.response.data[jsonData.response.data.length - 1].id + 1 : 1;
+      newData.id = newId;
+  
+      // Append new data to jsonData.response.data array
+      jsonData.response.data.push(newData);
+  
+      // Write updated data back to data.json
+      await fs.writeFile(dataFilePath, JSON.stringify(jsonData, null, 2));
+  
+      res.status(200).send('Data successfully saved.');
     } catch (error) {
-      console.error('Error reading or parsing file:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  });
-  
-  
-  //Post a new activity 
-  app.post('/activities',(req,res) => {
-    const newActivity = req.body.newActivity;
-
-    if (!newActivity){
-        res.status(400).json({
-            "error":true,
-            "data":null
-        });
-
-    
-    }else {
-      // new data saved to the file
-      res.status(201).json({
-        "error":false,
-        "data":newActivity
-      })
+      console.error('Error saving data:', error);
+      res.status(500).send('Error saving data.');
     }
   });
 
