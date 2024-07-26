@@ -3,55 +3,16 @@
   "response": {
     "data": [
       {
-        "id": 1,
-        "userId": "Archie",
-        "activity": "Logged In",
-        "timestamp": "2023-07-24T14:48:00.000Z"
+        "Archie": "testing",
+        "id": 1
       },
       {
-        "id": 2,
-        "userId": "Shilpa",
-        "activity": "Viewed Profile",
-        "timestamp": "2023-07-24T15:00:00.000Z"
+        "Archie": "testing",
+        "id": 2
       },
       {
-        "id": 3,
-        "userId": "Luisde",
-        "activity": "Logged Out",
-        "timestamp": "2023-07-24T16:30:00.000Z"
-      },
-      {
-        "id": 4
-      },
-      {
-        "id": 5
-      },
-      {
-        "id": 6
-      },
-      {
-        "id": 7
-      },
-      {
-        "id": 8
-      },
-      {
-        "id": 9
-      },
-      {
-        "id": 10
-      },
-      {
-        "id": 11
-      },
-      {
-        "id": 12
-      },
-      {
-        "id": 13
-      },
-      {
-        "id": 14
+        "Archie": "testing",
+        "id": 3
       }
     ]
   }
