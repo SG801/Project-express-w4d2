@@ -29,7 +29,7 @@ app.get('/', (_req, res) => {
 // Endpoint to serve data from data.json
 
 
-app.get('/data', async (_req, res) => {
+/*app.get('/data', async (_req, res) => {
     try {
       const dataPath = path.join(__dirname, 'data.json');
       const fileContent = await fs.readFile(dataPath, 'utf8');
@@ -54,9 +54,19 @@ app.get('/data', async (_req, res) => {
       console.error('Error reading or parsing file:', error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
+  }); */
+
+  app.get('/activities', async (req, res) => {
+    try {
+      const data = await fs.readFile(dataFilePath, 'utf8');
+      res.status(200).json(JSON.parse(data));
+    } catch (error) {
+      console.error('Error reading data:', error);
+      res.status(500).send('Error reading data.');
+    }
   });
 
-  app.post('/data', async (req, res) => {
+  app.post('/activities', async (req, res) => {
     const newData = req.body;
     try {
       let jsonData = { statusCode: 200, response: { data: [] } };
